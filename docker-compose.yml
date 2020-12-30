@@ -1,0 +1,43 @@
+# vim:ff=unix:ts=2:sw=2:ai:expandtab
+---
+version: '3.7'
+services:
+  daemon:
+    build:
+      context: daemon/
+    ports:
+      - 9091:9091
+      - 51413:51413/tcp
+      - 51413:51413/udp
+    volumes:
+      - daemon:/var/lib/transmission/
+    restart: always
+    networks:
+      default:
+        aliases:
+          - transmission-daemon
+
+  rss:
+    build:
+      context: rss/
+    volumes:
+      - rss:/var/lib/transmission-rss/
+    restart: always
+
+  ftp:
+    build:
+      context: vsftpd/
+    volumes:
+      - daemon:/var/lib/transmission/
+    ports:
+      - '21:21'
+      - 4559-4564:4559-4564
+    restart: always
+
+volumes:
+  daemon:
+  rss:
+
+networks:
+  default:
+    name: shore

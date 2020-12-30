@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eux
+
+install -d -o 1000 -g 1000 -m 755 /var/lib/transmission-rss/
+
+eval exec gosu "1000:1000" "$@"

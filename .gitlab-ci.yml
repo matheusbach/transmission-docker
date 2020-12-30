@@ -1,0 +1,12 @@
+---
+include:
+  - project: shore/ci-templates
+    file: templates/docker-compose.yml
+
+build:
+  extends: .compose-build
+  tags: [kodi.shore.co.il]
+
+run:
+  extends: .compose-run
+  tags: [kodi.shore.co.il]

@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eux
+
+install -d -o 1000 -g 1000 -m 750 /var/lib/transmission/.config/transmission-daemon/
+install -d -o 1000 -g 1000 -m 755 /var/lib/transmission/downloads
+install -o 1000 -g 1000 -m 640 /etc/transmission/settings.json /var/lib/transmission/.config/transmission-daemon/settings.json
+
+eval exec gosu "1000:1000" "$@"
