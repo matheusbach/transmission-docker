@@ -5,7 +5,6 @@ RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpin
     && \
     apk add --update --no-cache \
         build-base \
-        libffi-dev \
     && \
     gem install \
         transmission-rss:1.2.0 \
