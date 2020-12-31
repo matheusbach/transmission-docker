@@ -19,4 +19,4 @@ ENTRYPOINT [ "entrypoint" ]
 WORKDIR /var/lib/transmission-rss
 VOLUME /var/lib/transmission-rss
 CMD [ "/usr/local/bundle/bin/transmission-rss" ]
-HEALTHCHECK CMD pgrep ruby || exit 1
+HEALTHCHECK CMD pgrep --full ruby || exit 1
