@@ -10,7 +10,8 @@ services:
       - 51413:51413/tcp
       - 51413:51413/udp
     volumes:
-      - daemon:/var/lib/transmission/
+      - daemon:/var/lib/transmission
+      - /srv/library:/var/lib/transmission/downloads
     restart: always
     networks:
       default:
@@ -28,7 +29,7 @@ services:
     build:
       context: vsftpd/
     volumes:
-      - daemon:/var/lib/transmission/
+      - /srv/library:/var/lib/transmission/downloads
     ports:
       - '21:21'
       - 4559-4564:4559-4564
