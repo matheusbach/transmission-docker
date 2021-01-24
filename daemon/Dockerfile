@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.13
 # hadolint ignore=DL3018
 RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
         gosu \
