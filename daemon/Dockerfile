@@ -6,8 +6,8 @@ RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpin
     apk add --update --no-cache \
         transmission-daemon \
     && \
+    install -d -m 555 /var/lib/transmission && \
     mkdir -m 777 /run/transmission && \
-    mkdir -m 777 /var/lib/transmission && \
     mkdir /etc/transmission
 COPY --chown=root:root entrypoint /
 COPY settings.json /etc/transmission/
