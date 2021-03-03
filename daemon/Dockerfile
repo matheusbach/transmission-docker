@@ -1,14 +1,14 @@
 FROM alpine:3.13
-# hadolint ignore=DL3018,SC2174
+# hadolint ignore=DL3018
 RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
         gosu \
     && \
     apk add --update --no-cache \
         transmission-daemon \
     && \
-    mkdir -pm 777 /run/transmission && \
-    mkdir -pm 777 /var/lib/transmission && \
-    mkdir -p /etc/transmission
+    mkdir -m 777 /run/transmission && \
+    mkdir -m 777 /var/lib/transmission && \
+    mkdir /etc/transmission
 COPY --chown=root:root entrypoint /
 COPY settings.json /etc/transmission/
 VOLUME /var/lib/transmission/
