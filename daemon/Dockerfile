@@ -11,8 +11,9 @@ RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpin
     mkdir /etc/transmission
 COPY --chown=root:root entrypoint /
 COPY settings.json /etc/transmission/
-VOLUME /var/lib/transmission/
+VOLUME /var/lib/transmission
 WORKDIR /var/lib/transmission
+ENV HOME /var/lib/transmission
 EXPOSE 9091 51413/tcp 51413/udp
 ENTRYPOINT [ "/entrypoint" ]
 CMD [ "transmission-daemon", "--foreground" ]
