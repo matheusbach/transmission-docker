@@ -1,8 +1,17 @@
 #!/bin/sh
 set -eux
 
-mkdir -p /var/lib/transmission/downloads
-install -d -o transmission -g transmission -m 750 /var/lib/transmission/.config/transmission-daemon/
-install -o transmission -g transmission -m 640 /etc/transmission/settings.json /var/lib/transmission/.config/transmission-daemon/settings.json
+command -v stat > /dev/null || { echo "Can't find stat, exiting."; exit 1; }
+command -v gosu > /dev/null || { echo "Can't find gosu, exiting."; exit 1; }
 
-eval exec gosu "transmission:transmission" "$@"
+ln -sf /etc/transmission/settings.json ./settings.json
+
+if [ -d ./Downloads ] && [ "$(id -u)" -eq '0' ]
+then
+    uid="$(stat ./Downloads -c '%u')"
+    gid="$(stat ./Downloads -c '%g')"
+    chown "$uid:$gid" ./
+    eval exec gosu "$uid:$gid" "$@"
+else
+    eval exec "$@"
+fi

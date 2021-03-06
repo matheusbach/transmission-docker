@@ -9,8 +9,6 @@ services:
       - 51413:51413/tcp
       - 51413:51413/udp
     volumes:
-      - /etc/group:/etc/group:ro
-      - /etc/passwd:/etc/passwd:ro
       - daemon:/var/lib/transmission
       - /srv/library:/var/lib/transmission/downloads
     restart: always
