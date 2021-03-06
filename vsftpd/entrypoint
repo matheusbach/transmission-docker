@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eux
 
-install -d -o 1000 -g 1000 -m 755 /var/lib/transmission/downloads
+install -d -o 1000 -g 1000 -m 755 /var/lib/transmission/Downloads
 touch /var/log/vsftpd.log
 tail -f /var/log/vsftpd.log &
 eval exec "$@"
