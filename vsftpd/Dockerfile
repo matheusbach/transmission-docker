@@ -8,7 +8,7 @@ RUN apt-get update && \
         vsftpd \
     && \
     mkdir -p /var/run/vsftpd/empty && \
-    mkdir -m 755 /var/lib/transmission/Downloads && \
+    install -d -m 755 /var/lib/transmission/Downloads && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/archives/*
 COPY --chown=root:root entrypoint /usr/local/sbin/
 COPY --chown=root:root healthcheck /usr/local/bin
