@@ -8,10 +8,12 @@ RUN apt-get update && \
         vsftpd \
     && \
     mkdir -p /var/run/vsftpd/empty && \
+    mkdir -m 755 /var/lib/transmission/Downloads && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/archives/*
 COPY --chown=root:root entrypoint /usr/local/sbin/
 COPY --chown=root:root healthcheck /usr/local/bin
 COPY --chown=root:root vsftpd.conf /etc/vsftpd.conf
+VOLUME /var/lib/transmission/Downloads
 EXPOSE 21 4559 4560 4561 4562 4563 4564
 ENTRYPOINT [ "/usr/local/sbin/entrypoint" ]
 CMD [ "vsftpd" ]
