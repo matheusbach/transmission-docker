@@ -4,11 +4,13 @@ RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpin
         gosu \
     && \
     apk add --update --no-cache \
+        curl \
         transmission-daemon \
     && \
     mkdir -m 777 /run/transmission
 COPY --chown=root:root entrypoint /usr/local/sbin/docker-entrypoint
 COPY --chown=root:root settings.json /etc/transmission/
+COPY --chown=root:root kodi-scan /usr/local/bin/
 VOLUME /var/lib/transmission
 WORKDIR /var/lib/transmission
 ENV HOME /var/lib/transmission
