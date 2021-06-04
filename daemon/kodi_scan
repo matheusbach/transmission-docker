@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""Trigger a Kodi library update on torrent completion.
+See:
+https://github.com/transmission/transmission/wiki/Scripts#On_Torrent_Completion
+"""
+
+import json
+import pathlib
+import os
+import sys
+import urllib
+
+
+def scan(library=None):
+    """Trigger a Kodi library scan, either just audio, video or both."""
+    kodi_json_rpc_url = "http://172.18.0.1:8080/jsonrpc"
+    headers = {"content-type": "application/json"}
+    base_request_data = {"jsonrpc": "2.0", "id": "transmission"}
+    audio_request_data = base_request_data.copy()
+    audio_request_data["method"] = "AudioLibrary.Scan"
+    video_request_data = base_request_data.copy()
+    video_request_data["method"] = "VideoLibrary.Scan"
+
+    if library == "audio":
+        req = urllib.request.Request(
+            kodi_json_rpc_url,
+            headers=headers,
+            data=json.dumps(audio_request_data),
+        )
+        urllib.request.ulropen(req)
+    elif library == "video":
+        req = urllib.request.Request(
+            kodi_json_rpc_url,
+            headers=headers,
+            data=json.dumps(video_request_data),
+        )
+        urllib.request.ulropen(req)
+    else:
+        scan("video")
+        scan("audio")
+
+
+TR_DOWNLOADS_DIR = pathlib.Path("/var/lib/transmission/Downloads")
+TR_MOVIES_DIR = TR_DOWNLOADS_DIR / "Movies"
+TR_TV_SHOWS_DIR = TR_DOWNLOADS_DIR / "TV Shows"
+TR_MUSIC_DIR = TR_DOWNLOADS_DIR / "Music"
+TR_TORRENT_DIR = os.getenv("TR_TORRENT_DIR")
+
+if __name__ == "__main__":
+    if TR_TORRENT_DIR is None:
+        scan()
+        sys.exit()
+    TR_TORRENT_DIR = pathlib.Path(TR_TORRENT_DIR).resolve()
+    if (
+        TR_MOVIES_DIR in TR_TORRENT_DIR.parents
+        or TR_TV_SHOWS_DIR in TR_TORRENT_DIR.parents
+    ):
+        scan("video")
+    elif TR_MUSIC_DIR in TR_DOWNLOADS_DIR.parents:
+        scan("audio")
+    else:
+        scan()
