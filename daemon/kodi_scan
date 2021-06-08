@@ -27,14 +27,14 @@ def scan(library=None):
             headers=headers,
             data=json.dumps(audio_request_data),
         )
-        urllib.request.ulropen(req)
+        urllib.request.urlopen(req)  # nosec
     elif library == "video":
         req = urllib.request.Request(
             kodi_json_rpc_url,
             headers=headers,
             data=json.dumps(video_request_data),
         )
-        urllib.request.ulropen(req)
+        urllib.request.urlopen(req)  # nosec
     else:
         scan("video")
         scan("audio")
