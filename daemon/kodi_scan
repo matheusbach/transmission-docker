@@ -8,7 +8,7 @@ import json
 import pathlib
 import os
 import sys
-import urllib
+import urllib.request
 
 
 def scan(library=None):
