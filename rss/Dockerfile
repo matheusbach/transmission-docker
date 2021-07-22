@@ -1,17 +1,23 @@
-FROM ruby:alpine
+FROM docker.io/library/ruby:3.0-slim
 # hadolint ignore=DL3018
-RUN apk add --update --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        build-essential \
         gosu \
-    && \
-    apk add --update --no-cache \
-        build-base \
     && \
     gem install \
         transmission-rss:1.2.0 \
     && \
-    apk del --rdepends --no-cache build-base && \
-    addgroup -g 1000 transmission-rss && \
-    adduser -h /var/lib/transmission-rss -G transmission-rss -D -u 1000 transmission-rss
+    DEBIAN_FRONTEND=noninteractive apt-get purge -y --auto-remove \
+        build-essential \
+    && \
+    useradd --home-dir /var/lib/transmissions-rss \
+            --create-home \
+            --uid 1000 \
+            --user-group \
+            transmission-rss \
+    && \
+    rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* /var/cache/apt/archives/*
 COPY --chown=root:root entrypoint /usr/local/sbin/
 COPY --chown=root:root transmission-rss.conf /etc/
 ENTRYPOINT [ "entrypoint" ]
