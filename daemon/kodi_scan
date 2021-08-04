@@ -16,10 +16,8 @@ def scan(library=None):
     kodi_json_rpc_url = "http://172.18.0.1:8080/jsonrpc"
     headers = {"content-type": "application/json"}
     base_request_data = {"jsonrpc": "2.0", "id": "transmission"}
-    audio_request_data = base_request_data.copy()
-    audio_request_data["method"] = "AudioLibrary.Scan"
-    video_request_data = base_request_data.copy()
-    video_request_data["method"] = "VideoLibrary.Scan"
+    audio_request_data = {**base_request_data, "method": "AudioLibrary.Scan"}
+    video_request_data = {**base_request_data, "method": "VideoLibrary.Scan"}
 
     if library == "audio":
         req = urllib.request.Request(
