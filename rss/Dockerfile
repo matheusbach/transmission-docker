@@ -1,5 +1,5 @@
 FROM docker.io/library/ruby:3.0-slim
-# hadolint ignore=DL3018
+# hadolint ignore=DL3008
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
