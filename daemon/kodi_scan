@@ -40,11 +40,26 @@ def scan(library=None):
         scan("audio")
 
 
+def notify():
+    """Send a notification about a finished download."""
+    message = f"{TR_TORRENT_NAME} has finished downloading."
+    data = json.dumps({"message": message}).encode()
+    request = urllib.request.Request(
+        "https://notify.shore.co.il/send",
+        data=data,
+        method="POST",
+        headers={"Content-Type": "application/json"},
+    )
+    # pylint: disable-next=consider-using-with
+    urllib.request.urlopen(request)  # nosec
+
+
 TR_DOWNLOADS_DIR = pathlib.Path("/var/lib/transmission/Downloads")
 TR_MOVIES_DIR = TR_DOWNLOADS_DIR / "Movies"
 TR_TV_SHOWS_DIR = TR_DOWNLOADS_DIR / "TV Shows"
 TR_MUSIC_DIR = TR_DOWNLOADS_DIR / "Music"
 TR_TORRENT_DIR = os.getenv("TR_TORRENT_DIR")
+TR_TORRENT_NAME = os.getenv("TR_TORRENT_NAME")
 
 if __name__ == "__main__":
     if TR_TORRENT_DIR is None:
@@ -60,3 +75,4 @@ if __name__ == "__main__":
         scan("audio")
     else:
         scan()
+    notify()
