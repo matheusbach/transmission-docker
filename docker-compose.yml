@@ -1,4 +1,3 @@
-# vim:ff=unix:ts=2:sw=2:ai:expandtab
 ---
 version: '3.7'
 services:
@@ -33,6 +32,16 @@ services:
       - '21:21'
       - 4559-4564:4559-4564
     restart: always
+
+  webdav:
+    image: registry.shore.co.il/webdav
+    volumes:
+      - /srv/library:/var/www/webdav:ro
+    restart: always
+    networks:
+      default:
+        aliases:
+          - transmission-webdav
 
 volumes:
   daemon:
