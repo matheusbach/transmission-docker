@@ -1,9 +1,0 @@
-#!/bin/sh
-set -eux
-
-ftp -inv<<EOF
-open localhost
-user anonymous healthcheck
-ls
-bye
-EOF

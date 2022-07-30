@@ -23,16 +23,6 @@ services:
       - rss:/var/lib/transmission-rss/
     restart: always
 
-  ftp:
-    build:
-      context: vsftpd/
-    volumes:
-      - /srv/library:/var/lib/transmission/Downloads
-    ports:
-      - '21:21'
-      - 4559-4564:4559-4564
-    restart: always
-
   webdav:
     image: registry.shore.co.il/webdav
     volumes:

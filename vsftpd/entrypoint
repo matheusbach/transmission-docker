@@ -1,6 +1,0 @@
-#!/bin/sh
-set -eux
-
-touch /var/log/vsftpd.log
-tail -f /var/log/vsftpd.log &
-eval exec "$@"

@@ -2,7 +2,7 @@
 
 [![pipeline status](https://git.shore.co.il/nimrod/transmission-docker/badges/master/pipeline.svg)](https://git.shore.co.il/nimrod/transmission-docker/-/commits/master)
 
-> A dockerized Transmission daemon, RSS watcher and annonymous FTP server.
+> A dockerized Transmission daemon, RSS watcher and WebDAV access.
 
 ## Requirements
 
