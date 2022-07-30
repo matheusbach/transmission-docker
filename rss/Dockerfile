@@ -1,4 +1,4 @@
-FROM docker.io/library/ruby:3.0-slim
+FROM docker.io/library/ruby:3.1-slim
 # hadolint ignore=DL3008
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -6,7 +6,7 @@ RUN apt-get update && \
         gosu \
     && \
     gem install \
-        transmission-rss:1.2.0 \
+        transmission-rss:1.2.2 \
     && \
     DEBIAN_FRONTEND=noninteractive apt-get purge -y --auto-remove \
         build-essential \
